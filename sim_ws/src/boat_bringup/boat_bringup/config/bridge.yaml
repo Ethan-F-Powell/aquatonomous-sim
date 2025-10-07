@@ -1,0 +1,6 @@
+
+# ros_gz_bridge parameter file style list
+# Format: <gz_type>@<gz_topic> <=> <ros_type>@<ros_topic>
+# Basic IMU example and clock
+gz.msgs.IMU@/imu <= sensor_msgs/msg/Imu@/imu
+gz.msgs.Clock@/clock => rosgraph_msgs/msg/Clock@/clock
