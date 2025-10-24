@@ -1,0 +1,23 @@
+running egg_info
+writing ../../build/boat_sim/boat_sim.egg-info/PKG-INFO
+writing dependency_links to ../../build/boat_sim/boat_sim.egg-info/dependency_links.txt
+writing requirements to ../../build/boat_sim/boat_sim.egg-info/requires.txt
+writing top-level names to ../../build/boat_sim/boat_sim.egg-info/top_level.txt
+reading manifest file '../../build/boat_sim/boat_sim.egg-info/SOURCES.txt'
+writing manifest file '../../build/boat_sim/boat_sim.egg-info/SOURCES.txt'
+running build
+running install
+running install_data
+copying launch/bringup.launch.py -> /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/boat_sim/launch
+copying worlds/flat_water.sdf -> /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/boat_sim/worlds
+creating /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/boat_sim/models
+creating /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/boat_sim/models/nd_boat
+copying models/nd_boat/model.config -> /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/boat_sim/models/nd_boat
+copying models/nd_boat/model.sdf -> /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/boat_sim/models/nd_boat
+creating /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/boat_sim/config
+copying config/bridge.yaml -> /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/boat_sim/config
+running install_egg_info
+removing '/home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/lib/python3.10/site-packages/boat_sim-0.0.1-py3.10.egg-info' (and everything under it)
+Copying ../../build/boat_sim/boat_sim.egg-info to /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/lib/python3.10/site-packages/boat_sim-0.0.1-py3.10.egg-info
+running install_scripts
+writing list of installed files to '/home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/install.log'

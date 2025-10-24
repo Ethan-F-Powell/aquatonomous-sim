@@ -1,0 +1,7 @@
+- topic_name: /nd/left/thrust
+  ros_type_name: std_msgs/msg/Float64
+  gz_type_name: gz.msgs.Double
+- topic_name: /nd/right/thrust
+  ros_type_name: std_msgs/msg/Float64
+  gz_type_name: gz.msgs.Double
+

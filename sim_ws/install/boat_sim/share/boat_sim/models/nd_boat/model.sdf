@@ -1,0 +1,137 @@
+<sdf version="1.8">
+  <model name="nd_boat">
+    <!-- Model pose: start slightly above z=0 so it can settle into the water -->
+    <pose>0 0 0.25 0 0 0</pose>
+    <static>false</static>
+
+    <!-- ===================== LEFT PONTOON ===================== -->
+    <link name="pontoon_left">
+      <pose>0 0.25 0 0 0 0</pose>
+
+      <!-- Inertial properties -->
+      <inertial>
+        <mass>6.0</mass>
+        <inertia>
+          <ixx>0.15</ixx><iyy>0.50</iyy><izz>0.60</izz>
+          <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz>
+        </inertia>
+      </inertial>
+
+      <!-- Collision geometry (physics shape) -->
+      <collision name="col_left">
+        <geometry><box><size>0.9 0.12 0.10</size></box></geometry>
+      </collision>
+
+      <!-- Visual geometry (rendered shape) -->
+      <visual name="vis_left">
+        <geometry><box><size>0.9 0.12 0.10</size></box></geometry>
+        <material>
+          <!-- ambient: how bright it looks without direct light -->
+          <ambient>0.40 0.00 0.00 1</ambient>
+          <!-- diffuse: main color under light -->
+          <diffuse>1.00 0.00 0.00 1</diffuse>
+          <!-- specular: highlight color/strength -->
+          <specular>0.20 0.10 0.10 1</specular>
+        </material>
+      </visual>
+
+      <!-- Buoyancy / hydrodynamics / thruster (adjust filenames to your system) -->
+      <plugin name="buoy_l" filename="libignition-gazebo6-buoyancy-system.so">
+        <fluid_density>997.0</fluid_density>
+      </plugin>
+
+      <plugin name="hydro_l" filename="libignition-gazebo6-hydrodynamics-system.so">
+        <!-- x, y, z linear drag -->
+        <linear_drag>2.0 8.0 30.0</linear_drag>
+        <!-- roll, pitch, yaw angular drag -->
+        <angular_drag>0.2 0.2 0.4</angular_drag>
+      </plugin>
+
+      <plugin name="thruster_l" filename="libignition-gazebo6-thruster-system.so">
+        <link_name>pontoon_left</link_name>
+        <topic>/nd/left/thrust</topic>
+        <gain>1.0</gain>
+        <axis>1 0 0</axis>
+      </plugin>
+    </link>
+
+    <!-- ===================== RIGHT PONTOON ===================== -->
+    <link name="pontoon_right">
+      <pose>0 -0.25 0 0 0 0</pose>
+
+      <inertial>
+        <mass>6.0</mass>
+        <inertia>
+          <ixx>0.15</ixx><iyy>0.50</iyy><izz>0.60</izz>
+          <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz>
+        </inertia>
+      </inertial>
+
+      <collision name="col_right">
+        <geometry><box><size>0.9 0.12 0.10</size></box></geometry>
+      </collision>
+
+      <visual name="vis_right">
+        <geometry><box><size>0.9 0.12 0.10</size></box></geometry>
+        <material>
+          <ambient>0.40 0.00 0.00 1</ambient>
+          <diffuse>1.00 0.00 0.00 1</diffuse>
+          <specular>0.20 0.10 0.10 1</specular>
+        </material>
+      </visual>
+
+      <plugin name="buoy_r" filename="libignition-gazebo6-buoyancy-system.so">
+        <fluid_density>997.0</fluid_density>
+      </plugin>
+
+      <plugin name="hydro_r" filename="libignition-gazebo6-hydrodynamics-system.so">
+        <linear_drag>2.0 8.0 30.0</linear_drag>
+        <angular_drag>0.2 0.2 0.4</angular_drag>
+      </plugin>
+
+      <plugin name="thruster_r" filename="libignition-gazebo6-thruster-system.so">
+        <link_name>pontoon_right</link_name>
+        <topic>/nd/right/thrust</topic>
+        <gain>1.0</gain>
+        <axis>1 0 0</axis>
+      </plugin>
+    </link>
+
+    <!-- ===================== BRIDGE (ties pontoons) ===================== -->
+    <link name="bridge">
+      <pose>0 0 0.08 0 0 0</pose>
+
+      <inertial>
+        <mass>3.0</mass>
+        <inertia>
+          <ixx>0.05</ixx><iyy>0.20</iyy><izz>0.22</izz>
+          <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz>
+        </inertia>
+      </inertial>
+
+      <collision name="col_bridge">
+        <geometry><box><size>0.5 0.6 0.05</size></box></geometry>
+      </collision>
+
+      <visual name="vis_bridge">
+        <geometry><box><size>0.5 0.6 0.05</size></box></geometry>
+        <material>
+          <ambient>0.20 0.00 0.00 1</ambient>
+          <diffuse>0.80 0.00 0.00 1</diffuse>
+          <specular>0.20 0.10 0.10 1</specular>
+        </material>
+      </visual>
+    </link>
+
+    <!-- Weld joints to keep the three links rigidly connected -->
+    <joint name="weld_l" type="fixed">
+      <parent>bridge</parent>
+      <child>pontoon_left</child>
+    </joint>
+
+    <joint name="weld_r" type="fixed">
+      <parent>bridge</parent>
+      <child>pontoon_right</child>
+    </joint>
+  </model>
+</sdf>

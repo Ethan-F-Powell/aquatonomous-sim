@@ -1,0 +1,19 @@
+[1.508s] Invoking command in '/home/ethan/aquatonomous-sim/sim_ws/src/boat_sim': PYTHONPATH=/home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/boat_sim build --build-base /home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/build install --record /home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/install.log --single-version-externally-managed install_data
+[1.990s] running egg_info
+[1.992s] writing ../../build/boat_sim/boat_sim.egg-info/PKG-INFO
+[1.992s] writing dependency_links to ../../build/boat_sim/boat_sim.egg-info/dependency_links.txt
+[1.993s] writing requirements to ../../build/boat_sim/boat_sim.egg-info/requires.txt
+[1.994s] writing top-level names to ../../build/boat_sim/boat_sim.egg-info/top_level.txt
+[1.995s] reading manifest file '../../build/boat_sim/boat_sim.egg-info/SOURCES.txt'
+[1.996s] writing manifest file '../../build/boat_sim/boat_sim.egg-info/SOURCES.txt'
+[1.997s] running build
+[1.997s] running install
+[1.998s] running install_data
+[1.998s] copying worlds/flat_water.sdf -> /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/boat_sim/worlds
+[1.998s] copying models/nd_boat/model.sdf -> /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/boat_sim/models/nd_boat
+[2.001s] running install_egg_info
+[2.011s] removing '/home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/lib/python3.10/site-packages/boat_sim-0.0.1-py3.10.egg-info' (and everything under it)
+[2.011s] Copying ../../build/boat_sim/boat_sim.egg-info to /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/lib/python3.10/site-packages/boat_sim-0.0.1-py3.10.egg-info
+[2.011s] running install_scripts
+[2.066s] writing list of installed files to '/home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/install.log'
+[2.114s] Invoked command in '/home/ethan/aquatonomous-sim/sim_ws/src/boat_sim' returned '0': PYTHONPATH=/home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/boat_sim build --build-base /home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/build install --record /home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/install.log --single-version-externally-managed install_data
