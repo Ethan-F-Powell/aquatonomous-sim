@@ -1,14 +1,11 @@
 <sdf version="1.8">
   <model name="nd_boat">
-    <!-- Model pose: start slightly above z=0 so it can settle into the water -->
     <pose>0 0 0.25 0 0 0</pose>
     <static>false</static>
 
     <!-- ===================== LEFT PONTOON ===================== -->
     <link name="pontoon_left">
       <pose>0 0.25 0 0 0 0</pose>
-
-      <!-- Inertial properties -->
       <inertial>
         <mass>6.0</mass>
         <inertia>
@@ -17,48 +14,34 @@
         </inertia>
       </inertial>
 
-      <!-- Collision geometry (physics shape) -->
       <collision name="col_left">
         <geometry><box><size>0.9 0.12 0.10</size></box></geometry>
       </collision>
 
-      <!-- Visual geometry (rendered shape) -->
       <visual name="vis_left">
         <geometry><box><size>0.9 0.12 0.10</size></box></geometry>
         <material>
-          <!-- ambient: how bright it looks without direct light -->
           <ambient>0.40 0.00 0.00 1</ambient>
-          <!-- diffuse: main color under light -->
           <diffuse>1.00 0.00 0.00 1</diffuse>
-          <!-- specular: highlight color/strength -->
           <specular>0.20 0.10 0.10 1</specular>
         </material>
       </visual>
 
-      <!-- Buoyancy / hydrodynamics / thruster (adjust filenames to your system) -->
+      <!-- Buoyancy -->
       <plugin name="buoy_l" filename="libignition-gazebo6-buoyancy-system.so">
         <fluid_density>997.0</fluid_density>
       </plugin>
 
+      <!-- Hydrodynamics -->
       <plugin name="hydro_l" filename="libignition-gazebo6-hydrodynamics-system.so">
-        <!-- x, y, z linear drag -->
         <linear_drag>2.0 8.0 30.0</linear_drag>
-        <!-- roll, pitch, yaw angular drag -->
         <angular_drag>0.2 0.2 0.4</angular_drag>
-      </plugin>
-
-      <plugin name="thruster_l" filename="libignition-gazebo6-thruster-system.so">
-        <link_name>pontoon_left</link_name>
-        <topic>/nd/left/thrust</topic>
-        <gain>1.0</gain>
-        <axis>1 0 0</axis>
       </plugin>
     </link>
 
     <!-- ===================== RIGHT PONTOON ===================== -->
     <link name="pontoon_right">
       <pose>0 -0.25 0 0 0 0</pose>
-
       <inertial>
         <mass>6.0</mass>
         <inertia>
@@ -80,27 +63,21 @@
         </material>
       </visual>
 
+      <!-- Buoyancy -->
       <plugin name="buoy_r" filename="libignition-gazebo6-buoyancy-system.so">
         <fluid_density>997.0</fluid_density>
       </plugin>
 
+      <!-- Hydrodynamics -->
       <plugin name="hydro_r" filename="libignition-gazebo6-hydrodynamics-system.so">
         <linear_drag>2.0 8.0 30.0</linear_drag>
         <angular_drag>0.2 0.2 0.4</angular_drag>
       </plugin>
-
-      <plugin name="thruster_r" filename="libignition-gazebo6-thruster-system.so">
-        <link_name>pontoon_right</link_name>
-        <topic>/nd/right/thrust</topic>
-        <gain>1.0</gain>
-        <axis>1 0 0</axis>
-      </plugin>
     </link>
 
-    <!-- ===================== BRIDGE (ties pontoons) ===================== -->
+    <!-- ===================== BRIDGE ===================== -->
     <link name="bridge">
       <pose>0 0 0.08 0 0 0</pose>
-
       <inertial>
         <mass>3.0</mass>
         <inertia>
@@ -108,11 +85,9 @@
           <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz>
         </inertia>
       </inertial>
-
       <collision name="col_bridge">
         <geometry><box><size>0.5 0.6 0.05</size></box></geometry>
       </collision>
-
       <visual name="vis_bridge">
         <geometry><box><size>0.5 0.6 0.05</size></box></geometry>
         <material>
@@ -123,7 +98,98 @@
       </visual>
     </link>
 
-    <!-- Weld joints to keep the three links rigidly connected -->
+    <!-- ===================== PROP LINKS + JOINTS ===================== -->
+    <!-- Left propeller (tiny) -->
+    <link name="left_prop_link">
+      <inertial>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>1e-6</ixx><iyy>1e-6</iyy><izz>1e-6</izz>
+          <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <visual name="vis_left_prop">
+        <geometry>
+          <cylinder>
+            <radius>0.015</radius>
+            <length>0.01</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.1 0.1 0.1 1</ambient>
+          <diffuse>0.6 0.6 0.6 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+    </link>
+
+    <joint name="left_prop_joint" type="revolute">
+      <parent>pontoon_left</parent>
+      <child>left_prop_link</child>
+      <!-- place prop a bit aft of the pontoon -->
+      <pose>-0.45 0 0 0 0 0</pose>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit><lower>-1e16</lower><upper>1e16</upper></limit>
+        <dynamics><damping>0.0</damping><friction>0.0</friction></dynamics>
+      </axis>
+    </joint>
+
+    <!-- Right propeller (tiny) -->
+    <link name="right_prop_link">
+      <inertial>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>1e-6</ixx><iyy>1e-6</iyy><izz>1e-6</izz>
+          <ixy>0</ixy><ixz>0</ixz><iyz>0</iyz>
+        </inertia>
+      </inertial>
+      <visual name="vis_right_prop">
+        <geometry>
+          <cylinder>
+            <radius>0.015</radius>
+            <length>0.01</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0.1 0.1 0.1 1</ambient>
+          <diffuse>0.6 0.6 0.6 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+    </link>
+
+    <joint name="right_prop_joint" type="revolute">
+      <parent>pontoon_right</parent>
+      <child>right_prop_link</child>
+      <pose>-0.45 0 0 0 0 0</pose>
+      <axis>
+        <xyz>1 0 0</xyz>
+        <limit><lower>-1e16</lower><upper>1e16</upper></limit>
+        <dynamics><damping>0.0</damping><friction>0.0</friction></dynamics>
+      </axis>
+    </joint>
+
+    <!-- ===================== THRUSTERS (MODEL-LEVEL SYSTEMS) ===================== -->
+    <plugin name="ignition::gazebo::systems::Thruster"
+            filename="libignition-gazebo6-thruster-system.so">
+      <joint_name>left_prop_joint</joint_name>
+      <propeller_diameter>0.075</propeller_diameter>
+      <fluid_density>1000</fluid_density>
+      <max_thrust_cmd>500</max_thrust_cmd>
+      <min_thrust_cmd>-500</min_thrust_cmd>
+    </plugin>
+
+    <plugin name="ignition::gazebo::systems::Thruster"
+            filename="libignition-gazebo6-thruster-system.so">
+      <joint_name>right_prop_joint</joint_name>
+      <propeller_diameter>0.075</propeller_diameter>
+      <fluid_density>1000</fluid_density>
+      <max_thrust_cmd>500</max_thrust_cmd>
+      <min_thrust_cmd>-500</min_thrust_cmd>
+    </plugin>
+
+    <!-- Welds -->
     <joint name="weld_l" type="fixed">
       <parent>bridge</parent>
       <child>pontoon_left</child>
