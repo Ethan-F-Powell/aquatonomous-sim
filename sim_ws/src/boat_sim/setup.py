@@ -9,9 +9,9 @@ def collect_tree(root):
     pairs = []
     if os.path.isdir(root):
         for d, _, files in os.walk(root):
-            if files:
-                pairs.append((os.path.join(share, d),
-                              [os.path.join(d, f) for f in files]))
+            pairs.append(
+                (os.path.join(share, d), [os.path.join(d, f) for f in files])
+            )
     return pairs
 
 data_files = [
@@ -26,7 +26,7 @@ data_files += collect_tree('config')
 setup(
     name=package_name,
     version='0.0.1',
-    packages=[],
+    packages=[package_name],                 # <-- NEW: install the boat_sim Python package
     data_files=data_files,
     install_requires=['setuptools'],
     zip_safe=True,
@@ -34,4 +34,9 @@ setup(
     maintainer_email='you@example.com',
     description='Single-package simulator for the boat',
     license='MIT',
+    entry_points={                           # <-- NEW: console script entry point
+        'console_scripts': [
+            'boat_mixer_node = boat_sim.boat_mixer_node:main',
+        ],
+    },
 )

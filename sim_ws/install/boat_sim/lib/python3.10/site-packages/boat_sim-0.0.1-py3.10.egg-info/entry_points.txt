@@ -1,0 +1,2 @@
+[console_scripts]
+boat_mixer_node = boat_sim.boat_mixer_node:main
