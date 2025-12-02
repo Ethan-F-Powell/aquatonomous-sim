@@ -1,12 +1,13 @@
-Metadata-Version: 2.1
-Name: boat-sim
+Metadata-Version: 2.4
+Name: boat_sim
 Version: 0.0.1
 Summary: Single-package simulator for the boat
-Home-page: UNKNOWN
 Maintainer: you
 Maintainer-email: you@example.com
 License: MIT
-Platform: UNKNOWN
-
-UNKNOWN
-
+Requires-Dist: setuptools
+Dynamic: license
+Dynamic: maintainer
+Dynamic: maintainer-email
+Dynamic: requires-dist
+Dynamic: summary

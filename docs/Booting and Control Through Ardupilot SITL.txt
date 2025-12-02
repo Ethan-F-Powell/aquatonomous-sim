@@ -1,0 +1,200 @@
+aQuatonomous Boat Simulator – Run Instructions
+
+This assumes:
+
+Repo is at: ~/aquatonomous-sim
+
+Gazebo/ROS2 workspace is: ~/aquatonomous-sim/sim_ws
+
+ArduPilot is: ~/aquatonomous-sim/ardupilot
+
+Your bringup.launch.py and boat_mixer_node are already installed and working.
+
+You will use 4 terminals:
+
+Terminal 1 – Gazebo + boat world
+
+Terminal 2 – ArduPilot SITL + MAVProxy
+
+Terminal 3 – MAVROS
+
+Terminal 4 – Boat mixer + ROS–Gazebo bridge (can be same terminal or two more if you prefer)
+
+Start Gazebo with the boat
+
+Terminal 1:
+
+cd ~/aquatonomous-sim/sim_ws
+. install/setup.bash
+
+ros2 launch boat_sim bringup.launch.py
+
+
+What this does:
+
+Sets IGN / GZ resource paths so the world and nd_boat model are found
+
+Forces software rendering (llvmpipe) so the GUI is stable under WSL
+
+Kills any stale ign-gazebo instances
+
+Starts Ignition Gazebo with flat_water.sdf and spawns nd_boat
+
+Leave this running.
+
+Start ArduPilot Rover SITL + MAVProxy
+
+Terminal 2:
+
+cd ~/aquatonomous-sim/ardupilot
+
+sim_vehicle.py \
+  -v Rover \
+  -f rover-skid \
+  --console \
+  --map \
+  --mavproxy-args="--out=127.0.0.1:14555"
+
+
+Notes:
+
+-v Rover → use the Rover firmware
+
+-f rover-skid → skid-steer frame (this is the one that actually has config)
+
+--console → opens the ArduPilot HUD/console window
+
+--map → opens a small map window
+
+--mavproxy-args → extra args passed into the internal MAVProxy instance
+
+--out=127.0.0.1:14555 means MAVProxy streams MAVLink out via UDP on port 14555
+
+When it’s running correctly you’ll see:
+
+A SITL console scrolling text
+
+A little HUD window and a map window
+
+MAVProxy prompt at the bottom where you can type commands like:
+
+mode MANUAL
+
+rc 3 1600 etc.
+
+Leave this running.
+
+Start MAVROS (ROS2 side)
+
+Terminal 3:
+
+cd ~/aquatonomous-sim/sim_ws
+. install/setup.bash
+
+ros2 launch mavros apm.launch fcu_url:=udp://:14555@
+
+
+Notes:
+
+fcu_url:=udp://:14555@
+
+Tells MAVROS to listen on UDP port 14555
+
+This matches the --out=127.0.0.1:14555 we gave MAVProxy
+
+After a few seconds you should see MAVROS print connection messages and start publishing topics like /mavros/rc/in, /mavros/rc/out, /mavros/state, etc.
+
+You can sanity-check that RC data is flowing with:
+
+ros2 topic echo /mavros/rc/out
+
+
+Leave this running.
+
+Start ROS ↔ Gazebo thruster bridge
+
+Terminal 4 (part A – the bridge):
+
+cd ~/aquatonomous-sim/sim_ws
+. install/setup.bash
+
+ros2 run ros_gz_bridge parameter_bridge \
+  /model/nd_boat/joint/left_prop_joint/cmd_thrust@std_msgs/msg/Float64]ignition.msgs.Double \
+  /model/nd_boat/joint/right_prop_joint/cmd_thrust@std_msgs/msg/Float64]ignition.msgs.Double
+
+Notes:
+
+This bridges:
+
+ROS2 topic /model/nd_boat/joint/left_prop_joint/cmd_thrust (Float32)
+
+ROS2 topic /model/nd_boat/joint/right_prop_joint/cmd_thrust (Float32)
+to the Ignition topics of the same name (ignition.msgs.Double), which the Thruster plugin listens to.
+
+You can verify Ignition sees these topics with (from another terminal):
+
+ign topic -l | grep cmd_thrust
+
+
+Start the boat mixer node (ROS side logic)
+
+Terminal 4 (part B – same terminal, new tab, or Terminal 5 if you want):
+
+cd ~/aquatonomous-sim/sim_ws
+. install/setup.bash
+
+ros2 run boat_sim boat_mixer_node
+
+
+What the mixer does:
+
+Subscribes to /mavros/rc/out (RCOut message from MAVROS)
+
+Reads:
+
+steering channel (e.g. ch1)
+
+throttle channel (e.g. ch3)
+
+Converts PWM (1000–2000 µs) to normalized [-1, 1]
+
+Computes differential thrust:
+
+left = throttle + steering
+
+right = throttle - steering
+
+Publishes:
+
+/model/nd_boat/joint/left_prop_joint/cmd_thrust (std_msgs/Float32)
+
+/model/nd_boat/joint/right_prop_joint/cmd_thrust (std_msgs/Float32)
+
+To check use: ros2 topic echo /model/nd_boat/joint/left_prop_joint/cmd_thrust
+
+Through the bridge, these drive the Ignition Thruster plugins attached to:
+
+left_prop_joint
+
+right_prop_joint
+
+Driving the boat from MavProxy
+
+Once all the above are running:
+
+In the MAVProxy console (from Step 2), make sure you’re in a mode that responds to RC (e.g. MANUAL):
+
+mode MANUAL
+
+Then send RC commands, for example:
+
+rc 3 1600 # throttle up (channel 3)
+rc 3 1400 # throttle reverse
+rc 1 1600 # steer one way (channel 1)
+rc 1 1400 # steer the other way
+
+You should see:
+
+/mavros/rc/out values change (terminal 3, if you echo it)
+
+/model/nd_boat/joint/*_prop_joint/cmd_thrust values change (terminal with boat_mixer / bridge)
