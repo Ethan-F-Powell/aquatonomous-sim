@@ -1,0 +1,32 @@
+[2.539s] Invoking command in '/home/ethan/aquatonomous-sim/sim_ws/src/boat_sim': PYTHONPATH=/home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/boat_sim build --build-base /home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/build install --record /home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/install.log --single-version-externally-managed install_data
+[3.265s] running egg_info
+[3.321s] writing ../../build/boat_sim/boat_sim.egg-info/PKG-INFO
+[3.324s] writing dependency_links to ../../build/boat_sim/boat_sim.egg-info/dependency_links.txt
+[3.324s] writing entry points to ../../build/boat_sim/boat_sim.egg-info/entry_points.txt
+[3.325s] writing requirements to ../../build/boat_sim/boat_sim.egg-info/requires.txt
+[3.325s] writing top-level names to ../../build/boat_sim/boat_sim.egg-info/top_level.txt
+[3.398s] reading manifest file '../../build/boat_sim/boat_sim.egg-info/SOURCES.txt'
+[3.401s] writing manifest file '../../build/boat_sim/boat_sim.egg-info/SOURCES.txt'
+[3.403s] running build
+[3.404s] running build_py
+[3.407s] copying boat_sim/boat_mixer_node.py -> /home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/build/lib/boat_sim
+[3.408s] copying boat_sim/__init__.py -> /home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/build/lib/boat_sim
+[3.408s] running install
+[3.417s] running install_lib
+[3.443s] copying /home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/build/lib/boat_sim/boat_mixer_node.py -> /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/lib/python3.10/site-packages/boat_sim
+[3.445s] byte-compiling /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/lib/python3.10/site-packages/boat_sim/boat_mixer_node.py to boat_mixer_node.cpython-310.pyc
+[3.447s] running install_data
+[3.448s] copying resource/boat_sim -> /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/ament_index/resource_index/packages
+[3.451s] copying package.xml -> /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/boat_sim
+[3.451s] copying launch/bringup.launch.py -> /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/boat_sim/launch
+[3.454s] copying worlds/flat_water.sdf -> /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/boat_sim/worlds
+[3.455s] copying models/nd_boat/model.config -> /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/boat_sim/models/nd_boat
+[3.457s] copying models/nd_boat/model.sdf -> /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/boat_sim/models/nd_boat
+[3.459s] copying config/bridge.yaml -> /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/share/boat_sim/config
+[3.461s] running install_egg_info
+[3.503s] removing '/home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/lib/python3.10/site-packages/boat_sim-0.0.1-py3.10.egg-info' (and everything under it)
+[3.503s] Copying ../../build/boat_sim/boat_sim.egg-info to /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/lib/python3.10/site-packages/boat_sim-0.0.1-py3.10.egg-info
+[3.503s] running install_scripts
+[3.560s] Installing boat_mixer_node script to /home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/lib/boat_sim
+[3.562s] writing list of installed files to '/home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/install.log'
+[3.663s] Invoked command in '/home/ethan/aquatonomous-sim/sim_ws/src/boat_sim' returned '0': PYTHONPATH=/home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/ethan/aquatonomous-sim/sim_ws/install/boat_sim/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/boat_sim build --build-base /home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/build install --record /home/ethan/aquatonomous-sim/sim_ws/build/boat_sim/install.log --single-version-externally-managed install_data
