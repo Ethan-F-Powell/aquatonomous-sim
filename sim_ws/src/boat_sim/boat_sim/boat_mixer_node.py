@@ -2,7 +2,7 @@ import rclpy
 from rclpy.node import Node
 
 from std_msgs.msg import Float64
-from mavros_msgs.msg import RCOut
+from mavros_msgs.msg import RCIn
 
 
 def pwm_to_normalized(pwm, center=1500.0, span=500.0):
@@ -58,8 +58,8 @@ class BoatMixerNode(Node):
 
         # Subscribe to MAVROS RC outputs
         self.rc_sub = self.create_subscription(
-            RCOut,
-            "/mavros/rc/out",
+            RCIn,
+            "/mavros/rc/in",
             self.rc_callback,
             10,
         )
@@ -72,7 +72,7 @@ class BoatMixerNode(Node):
         # Command range to match Thruster plugin config
         self.max_cmd = 500.0
 
-    def rc_callback(self, msg: RCOut):
+    def rc_callback(self, msg: RCIn):
         channels = msg.channels
 
         # RCOut channels are 1 based in ArduPilot naming: ch1, ch2, ...
@@ -80,7 +80,7 @@ class BoatMixerNode(Node):
         steer_idx = self.steering_channel - 1
 
         if len(channels) <= max(thr_idx, steer_idx):
-            self.get_logger().warn("RCOut message has too few channels")
+            self.get_logger().warn("RCIn message has too few channels")
             return
 
         throttle_pwm = channels[thr_idx]
